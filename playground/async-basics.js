@@ -6,6 +6,6 @@ setTimeout(() => {
 
 setTimeout(() => {
     console.log('Second callback');
-}, 0);
+}, 0)
 
 console.log('finishing app');
