@@ -2,17 +2,20 @@ const request = require('request');
 
 
 
-weatherInformation = () => {
+weatherInformation = (latitude, longitude, callback) => {
     request({
-        url: `https://api.darksky.net/forecast/337fbca7fe6ae5b598db2d1a1c2ecfa0/35.8807375,-86.317392`,
+        url: `https://api.darksky.net/forecast/337fbca7fe6ae5b598db2d1a1c2ecfa0/${latitude},${longitude}`,
         json: true
     }, (error, response, body) => {
         if (error) {
-            console.log('Unable to connect to Weather servers.');
-        // } else if (response.statusCode === 400) {
-        //     console.log =('Unable to fetch weather')
+            callback('Unable to connect to Weather servers.');
+        } else if (response.statusCode === 400) {
+            callback('Unable to fetch weather')
         } else if (response.statusCode === 200) {
-            console.log('temperature:', body.currently.temperature);
+            callback(undefined, {
+                temperature: body.currently.temperature,
+                Apparentemperature: body.currently.apparentTemperature
+            });
         }
     });
 
